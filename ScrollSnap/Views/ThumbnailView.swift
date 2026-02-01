@@ -158,11 +158,10 @@ class ThumbnailView: NSView {
     // MARK: - Mouse Event Handlers
     /// Handles a click on the thumbnail (no drag, minimal movement)
     private func handleClick() {
-        // Stop timer, open image in Preview, and close app
+        // Stop timer, open image in Preview, and close thumbnail
         thumbnailTimer?.invalidate()
         saveImage(image, to: "Preview")
-        overlayManager.thumbnailWindow?.orderOut(nil)
-        NSApplication.shared.terminate(nil)
+        overlayManager.hideThumbnail()
     }
     
     /// Handles swipe-right beyond threshold: animates off-screen, saves, and closes
@@ -311,7 +310,7 @@ extension ThumbnailView: NSDraggingSource, NSPasteboardItemDataProvider {
     
     func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
         if operation != [] {
-            NSApplication.shared.terminate(nil)
+            overlayManager.hideThumbnail()
         } else {
             handleDragCancel()
         }

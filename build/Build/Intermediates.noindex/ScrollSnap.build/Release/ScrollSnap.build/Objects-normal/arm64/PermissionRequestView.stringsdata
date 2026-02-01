@@ -1,0 +1,40 @@
+{
+  "source": "/Users/zouchaoxu/ScrollSnap/ScrollSnap/Views/PermissionRequestView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Screen Recording Permission Required",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "ScrollSnap needs screen recording permission to capture screenshots.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Please enable it in System Preferences > Security & Privacy > Screen Recording, then relaunch the app.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quit",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 26
+        }
+      }
+    ]
+  },
+  "version": 1
+}

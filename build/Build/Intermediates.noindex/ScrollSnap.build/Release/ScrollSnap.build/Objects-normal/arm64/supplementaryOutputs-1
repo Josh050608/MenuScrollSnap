@@ -1,0 +1,12 @@
+{
+  "/Users/zouchaoxu/ScrollSnap/ScrollSnap/Views/OverlayView.swift" : {
+    "abi-baseline-json" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap.abi.json",
+    "const-values" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap-primary.swiftconstvalues",
+    "dependencies" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap-primary.d",
+    "diagnostics" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap-primary.dia",
+    "objc-header" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap-Swift.h",
+    "swiftdoc" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap.swiftdoc",
+    "swiftmodule" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap.swiftmodule",
+    "swiftsourceinfo" : "/Users/zouchaoxu/ScrollSnap/build/Build/Intermediates.noindex/ScrollSnap.build/Release/ScrollSnap.build/Objects-normal/arm64/ScrollSnap.swiftsourceinfo"
+  }
+}

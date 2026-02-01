@@ -289,7 +289,6 @@ class OverlayManager {
         if let window = thumbnailWindow {
             window.orderOut(nil)
             thumbnailWindow = nil
-            NSApplication.shared.terminate(nil) // Close app after save or delete
         }
     }
     
