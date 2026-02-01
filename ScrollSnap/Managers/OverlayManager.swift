@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@MainActor
 class OverlayManager {
     
     // MARK: - Properties
@@ -31,9 +32,19 @@ class OverlayManager {
     }
     
     // MARK: - Public API
-    
-    /// Sets up overlays on all available screens.
+
+    /// Sets up overlays on all available screens and shows them.
     func setupOverlays() {
+        createOverlayWindows()
+        showOverlays()
+    }
+
+    /// Creates overlay windows for all available screens without showing them.
+    private func createOverlayWindows() {
+        // Remove any existing windows
+        overlayWindows.forEach { $0.orderOut(nil) }
+        overlayWindows.removeAll()
+
         overlayWindows = NSScreen.screens.map { screen in
             let overlayWindow = OverlayWindow(
                 contentRect: screen.frame,
@@ -41,18 +52,26 @@ class OverlayManager {
                 backing: .buffered,
                 defer: false
             )
-            
+
             overlayWindow.level = .statusBar
             overlayWindow.isOpaque = false
             overlayWindow.backgroundColor = .clear
             overlayWindow.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-            
+
             let overlayView = OverlayView(manager: self, screenFrame: screen.frame)
             overlayWindow.contentView = overlayView
-            
+
             return overlayWindow
         }
-        
+    }
+
+    /// Shows the overlay windows and activates the app.
+    func showOverlays() {
+        // Ensure overlays are created
+        if overlayWindows.isEmpty {
+            createOverlayWindows()
+        }
+
         // Find the windows for the rectangle and menu bar
         let rectangleWindow = overlayWindows.first(where: { $0.frame.contains(rectangle.origin) })
         let menuBarWindow = overlayWindows.first(where: { $0.frame.contains(menuRect.origin) })
@@ -76,6 +95,18 @@ class OverlayManager {
             rectangleWindow.makeKey()
             NSApp.activate(ignoringOtherApps: true)
         }
+    }
+
+    /// Hides all overlay windows to save resources.
+    func hideOverlays() {
+        overlayWindows.forEach { $0.orderOut(nil) }
+        // Reset mouse event handling
+        setOverlayIgnoresMouseEvents(false)
+    }
+
+    /// Returns whether overlays are currently visible.
+    func areOverlaysVisible() -> Bool {
+        return overlayWindows.contains { $0.isVisible }
     }
     
     /// Updates the rectangle and persists it to UserDefaults. Refreshes all overlays.
@@ -263,10 +294,7 @@ class OverlayManager {
     }
     
     // MARK: - Overlay Visibility
-    private func hideOverlays() {
-        overlayWindows.forEach { $0.orderOut(nil) }
-    }
-    
+
     /// Refreshes overlays. If oldFrame and newFrame are provided, it invalidates only those regions.
     /// Otherwise, it falls back to a full redraw.
     private func refreshOverlays(oldFrame: NSRect? = nil, newFrame: NSRect? = nil) {

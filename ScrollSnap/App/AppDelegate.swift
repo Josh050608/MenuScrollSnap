@@ -4,39 +4,72 @@
 //
 
 import SwiftUI
+import Carbon
 
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
     let overlayManager = OverlayManager()
     private var settingsWindowController: SettingsWindowController?
     private var permissionWindow: NSWindow?
-    
+    private var globalHotKeyMonitor: Any?
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupMainMenu()
-        
+
         cleanupOldTemporaryFiles()
-        
+
         Task {
             let hasPermission = await checkScreenRecordingPermission()
             await MainActor.run {
-                if hasPermission {
-                    // Setup overlays only if permission is granted
-                    overlayManager.setupOverlays()
-                } else {
+                if !hasPermission {
                     self.showPermissionRequestWindow()
                 }
             }
         }
-        
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            if event.modifierFlags.contains(.command) && event.keyCode == 43 { // Command + ,
-                self.showSettingsWindow()
-                return nil
-            }
+
+        // Setup global hotkey (Cmd+Shift+X)
+        setupGlobalHotKey()
+
+        // Setup escape key handler
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self = self else { return event }
+
             if event.keyCode == 53 { // Escape
-                NSApplication.shared.terminate(self)
-                return nil
+                if self.overlayManager.areOverlaysVisible() {
+                    self.overlayManager.hideOverlays()
+                    return nil
+                }
             }
             return event
+        }
+    }
+
+    private func setupGlobalHotKey() {
+        globalHotKeyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            // Cmd+Shift+X
+            if event.modifierFlags.contains([.command, .shift]) && event.keyCode == 7 { // X key
+                Task { @MainActor in
+                    self?.toggleCapture()
+                }
+            }
+        }
+    }
+
+    /// Toggles the capture overlay on/off
+    func toggleCapture() {
+        Task {
+            let hasPermission = await checkScreenRecordingPermission()
+            await MainActor.run {
+                if hasPermission {
+                    if overlayManager.areOverlaysVisible() {
+                        overlayManager.hideOverlays()
+                    } else {
+                        overlayManager.setupOverlays()
+                    }
+                } else {
+                    self.showPermissionRequestWindow()
+                }
+            }
         }
     }
     
@@ -56,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.mainMenu = mainMenu
     }
     
-    @objc private func showSettingsWindow() {
+    @objc func showSettingsWindow() {
         if settingsWindowController == nil {
             settingsWindowController = SettingsWindowController(overlayManager: overlayManager)
         }

@@ -6,7 +6,7 @@
 import AppKit
 import Vision
 
-class StitchingManager {
+final class StitchingManager: @unchecked Sendable {
     // MARK: - Properties
     private var runningStitchedImage: NSImage?
     private var previousImage: NSImage? // The most recent screenshot to use for comparison.
