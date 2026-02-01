@@ -1,5 +1,7 @@
 # ScrollSnap
 
+[English](#) | [中文](README_CN.md)
+
 ScrollSnap is an open-source macOS application designed to capture scrolling screenshots with a customizable selection area and menu interface. It allows users to define a capture region, take stitched scrolling screenshots, and save them to various destinations (e.g., Desktop, Clipboard, Preview). Built with Swift and leveraging AppKit and ScreenCaptureKit, ScrollSnap provides a sleek overlay-based UI for precise control.
 
 <div style="text-align: center;">
@@ -13,6 +15,8 @@ ScrollSnap is an open-source macOS application designed to capture scrolling scr
 
 ## Features
 
+- **Menu Bar Integration**: Runs conveniently in the macOS menu bar with quick access to all features.
+- **Global Hotkey**: Trigger screenshot capture instantly with a customizable keyboard shortcut.
 - **Customizable Selection Area**: Resize and drag a selection rectangle to define the capture region.
 - **Scrolling Capture**: Automatically stitches multiple screenshots into a single image for capturing long content.
 - **Interactive Menu**: Includes options to capture, save, reset positions, or cancel, with a draggable interface.
@@ -45,31 +49,35 @@ ScrollSnap is an open-source macOS application designed to capture scrolling scr
 
 1. **Launch the App**:
 
-- ScrollSnap starts automatically, displaying an overlay with a selection rectangle and menu bar.
+- ScrollSnap runs in the menu bar. Click the menu bar icon or use the global hotkey to start capturing.
 
-2. **Adjust the Selection**:
+2. **Quick Capture**:
+
+- Use the keyboard shortcut (configurable in Preferences) to instantly activate the capture overlay.
+
+3. **Adjust the Selection**:
 
 - Drag the rectangle to move it or use the resize handles to adjust its size.
 
-3. **Capture a Screenshot**:
+4. **Capture a Screenshot**:
 
 - For scrolling capture, click "Capture" to start, then "Save" to stop and stitch the images.
 
-4. **Interact with the Thumbnail**:
+5. **Interact with the Thumbnail**:
 
 - Drag the thumbnail to copy the image elsewhere, swipe right to save, or right-click for options (Show in Finder, Delete, Close).
 
-5. **Save Options**:
+6. **Save Options**:
 
 - Use the "Options" menu to set the save destination (Desktop, Clipboard, etc.).
 
-6. **Preferences**:
+7. **Preferences**:
 
-- Press `Cmd + ,` to open the settings window and reset positions if needed.
+- Press `Cmd + ,` or access via the menu bar icon to open settings and customize hotkeys or reset positions.
 
-7. **Quit**:
+8. **Quit**:
 
-- Press `Esc` or select "Quit ScrollSnap" from the main menu.
+- Press `Esc` or select "Quit ScrollSnap" from the menu bar icon.
 
 ## Project Structure
 
